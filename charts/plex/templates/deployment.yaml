@@ -270,7 +270,6 @@ spec:
 {{- else }}
           claimName: "extradata-{{ .name }}"
 {{- end }}
-{{- end }}
 {{- range .Values.persistence.extraMounts }}
       - name: {{ .name }}
         persistentVolumeClaim:
