@@ -213,7 +213,6 @@ spec:
           - mountPath: "/{{ .name }}"
             name: "{{ .name }}"
           {{- end }}
-          {{- end }}
           - name: shared
             mountPath: /shared
           {{- if .Values.plexPreferences.enabled }}
@@ -270,6 +269,7 @@ spec:
           claimName: "{{ .claimName }}"
 {{- else }}
           claimName: "extradata-{{ .name }}"
+{{- end }}
 {{- end }}
 {{- range .Values.persistence.extraMounts }}
       - name: {{ .name }}
