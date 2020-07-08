@@ -106,7 +106,7 @@ persistence:
   ## Claim will me mounted as /{mountPath}
   # - name: video
   #   claimName: video-claim
-  #   mountPath: /mnt/path/in/pod
+  #   mountPath: mnt/path/in/pod
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
