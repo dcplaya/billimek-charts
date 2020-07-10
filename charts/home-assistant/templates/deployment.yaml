@@ -72,7 +72,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.socat.enabled }}
           command: ["socat"]
-          args: "{{ .Values.socat.arguments }}"
+          args: "["pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777", "tcp:ser2sock-zigbee.home-automation.svc:10000"]"
           {{- end }}
           ports:
             - name: api
