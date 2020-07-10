@@ -67,7 +67,9 @@ hostNetwork: false
 
 socat:
   enabled: false
-  arguments: ["pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777", "tcp:ser2sock.home-automation.svc:10000"]
+  arguments: []
+  #  - "pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777"
+  #  - "tcp:ser2sock.home-automation.svc:10000"
   # Allows mounting of a ser2sock device via tcp
 
 persistence:
