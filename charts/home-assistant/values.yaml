@@ -65,9 +65,13 @@ ingress:
 
 hostNetwork: false
 
-socat:
+cmdOverride:
   enabled: false
-#  arguments: []
+  shellArgs: "python -m homeassistant --config /config"
+  # default to run HA at least, more can be added by changing it to
+  #  "zha && zwave && python -m homeassistant --config /config"
+  #  zha/zwav are binaries mounted in /usr/bin inside the container using a confiMap
+  #
   #  - "pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777"
   #  - "tcp:ser2sock.home-automation.svc:10000"
   # Allows mounting of a ser2sock device via tcp
