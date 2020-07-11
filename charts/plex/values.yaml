@@ -212,10 +212,16 @@ persistence:
   extraMounts: []
     ## Include additional claims that can be mounted inside the
     ## pod. This is useful if you wish to use different paths with categories
+<<<<<<< HEAD
     ## Claim will me mounted as /{mountPath}
     # - name: video
     #   claimName: video-claim
     #   mountPath: mnt/path/in/pod
+=======
+    ## Claim will me mounted as /{name}
+    # - name: video
+    #   claimName: video-claim
+>>>>>>> [plex] Allow custom extraMount paths (#270)
 
   config:
     # Optionally specify claimName to manually override the PVC to be used for
