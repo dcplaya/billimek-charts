@@ -371,7 +371,8 @@ spec:
           args:
 #          - '-c'
           {{- range .Values.socat.devices }}
-          - 'pty,link=/socat{{ .mountPath }},raw,user=0,group=0,mode=777,wait-slave tcp:{{ .ip }}:{{ .port }},forever,interval=10'
+          - 'pty,link=/socat{{ .mountPath }},raw,user=0,group=0,mode=777,wait-slave'
+          - 'tcp:{{ .ip }}:{{ .port }},forever,interval=10'
           {{- end }}
           volumeMounts:
           {{- range .Values.socat.devices }}
