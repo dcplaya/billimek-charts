@@ -1,6 +1,5 @@
 helm-extra-args: --timeout 600s
-#CHECK_VERSION_INCREMENT: false
 chart-dirs:
   - charts
 chart-repos:
-  - billimek=https://billimek.com/billimek-charts
+  - dcplaya=https://github.com.com/dcplaya/billimek-charts
