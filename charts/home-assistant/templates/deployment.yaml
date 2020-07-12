@@ -422,7 +422,6 @@ spec:
       {{- if .Values.socat.enabled }}
       {{- range .Values.socat.devices }}
       - name: {{ .name }}
-        defaultMode: 0555
         emtpyDir: { }
       {{- end }}
       {{ end }}
