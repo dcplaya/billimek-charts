@@ -337,10 +337,10 @@ socat:
 
   ## ip can be a domain name or actual IP address
   devices:
-  - name: zigbee-device
-    mountPath: /dev/zigbee
-    ip: ser2sock-zigbee.home-automation.svc
-    port: 10000
+    - name: zigbee-device
+      mountPath: /dev/zigbee
+      ip: ser2sock-zigbee.home-automation.svc
+      port: 10000
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
