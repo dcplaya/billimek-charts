@@ -367,7 +367,7 @@ spec:
         - name: socat
           image: "{{ .Values.socat.image.repository }}:{{ .Values.socat.image.tag }}"
           imagePullPolicy: {{ .Values.socat.image.pullPolicy }}
-#          command: ["/bin/sh"]
+          command: ["/bin/sh"]
 #          args:
 #          - '-c'
 #          {{- range .Values.socat.devices }}
