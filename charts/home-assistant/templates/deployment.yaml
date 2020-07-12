@@ -373,7 +373,7 @@ spec:
           {{- range .Values.socat.devices }}
           - '-dd'
           - 'pty,link=/socat{{ .mountPath }},raw,user=0,group=0,mode=777'
-          - 'tcp:{{ .ip }}:{{ .port }},forever,interval=10,fork'
+          - 'tcp:{{ .ip }}:{{ .port }},forever,interval=10'
           {{- end }}
           volumeMounts:
           {{- range .Values.socat.devices }}
