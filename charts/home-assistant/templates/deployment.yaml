@@ -422,7 +422,8 @@ spec:
       {{- if .Values.socat.enabled }}
       {{- range .Values.socat.devices }}
       - name: {{ .name }}
-        emtpyDir: { }
+#        defaultMode: 0555
+        emptyDir: { }
       {{- end }}
       {{ end }}
       {{- if .Values.extraVolumes  }}{{ toYaml .Values.extraVolumes | trim | nindent 6 }}{{ end }}
