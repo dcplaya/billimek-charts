@@ -371,11 +371,11 @@ spec:
           args:
           - '-c'
           {{- range .Values.socat.devices }}
-          - 'socat pty,link={{ .Values.socat.devices.mountPath }},raw,user=0,group=0,mode=777 tcp:{{ .Values.socat.devices.ip }}:{{ .Values.socat.devices.port }},forever,interval=10,fork'
+          - 'socat pty,link={{ .Values.socat.devices.name.mountPath }},raw,user=0,group=0,mode=777 tcp:{{ .Values.socat.devices.name.ip }}:{{ .Values.socat.devices.name.port }},forever,interval=10,fork'
           {{- end }}
           volumeMounts:
           {{- range .Values.socat.devices }}
-          - mountPath: {{ .Values.socat.devices.mountPath }}
+          - mountPath: {{ .Values.socat.devices.name.mountPath }}
             name: {{ .Values.socat.devices.name }}
           {{- end }}
           securityContext:
@@ -383,7 +383,6 @@ spec:
           {{- if and (.Values.runAsUser) (.Values.fsGroup) }}
           {{- if not (eq .Values.runAsUser 0.0) }}
              fsGroup: {{ .Values.fsGroup }}
-          {{- end }}
           {{- end }}
           {{- end }}
         {{- end }}
