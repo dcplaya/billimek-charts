@@ -367,12 +367,12 @@ spec:
         - name: socat
           image: "{{ .Values.socat.image.repository }}:{{ .Values.socat.image.tag }}"
           imagePullPolicy: {{ .Values.socat.image.pullPolicy }}
-          command: ["/bin/sh"]
-          args:
-          - '-c'
-          {{- range .Values.socat.devices }}
-          - 'socat pty,link=/socat{{ .mountPath }},raw,user=0,group=0,mode=777 tcp:{{ .ip }}:{{ .port }},forever,interval=10'
-          {{- end }}
+#          command: ["/bin/sh"]
+#          args:
+#          - '-c'
+#          {{- range .Values.socat.devices }}
+#          - 'socat pty,link=/socat{{ .mountPath }},raw,user=0,group=0,mode=777,wait-slave tcp:{{ .ip }}:{{ .port }},forever,interval=10'
+#          {{- end }}
           volumeMounts:
           {{- range .Values.socat.devices }}
           - mountPath: /socat # {{ .mountPath }}
