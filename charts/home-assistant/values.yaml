@@ -336,9 +336,10 @@ socat:
     pullPolicy: IfNotPresent
 
   ## ip can be a domain name or actual IP address
+  ## mountPath will be mounted in /socat{{ mountPath }} in both socat and HA pods
   devices:
     - name: zigbee-device
-      mountPath: /dev/zigbee
+      mountPath: /zigbee
       ip: ser2sock-zigbee.home-automation.svc
       port: 10000
 

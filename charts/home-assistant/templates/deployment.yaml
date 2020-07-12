@@ -146,7 +146,7 @@ spec:
           {{- if .Values.extraVolumeMounts }}{{ toYaml .Values.extraVolumeMounts | trim | nindent 10 }}{{ end }}
           {{- if .Values.usePodSecurityContext }}
           {{- range .Values.socat.devices }}
-          - mountPath: /dev # {{ .mountPath }}
+          - mountPath: /socat{{ .mountPath }}
             name: {{ .name }}
           {{- end }}
           securityContext:
@@ -371,11 +371,11 @@ spec:
           args:
           - '-c'
           {{- range .Values.socat.devices }}
-          - 'socat pty,link={{ .mountPath }},raw,user=0,group=0,mode=777 tcp:{{ .ip }}:{{ .port }},forever,interval=10,fork'
+          - 'socat pty,link=/socat{{ .mountPath }},raw,user=0,group=0,mode=777 tcp:{{ .ip }}:{{ .port }},forever,interval=10,fork'
           {{- end }}
           volumeMounts:
           {{- range .Values.socat.devices }}
-          - mountPath: /dev # {{ .mountPath }}
+          - mountPath: /socat{{ .mountPath }}
             name: {{ .name }}
           {{- end }}
           securityContext:
