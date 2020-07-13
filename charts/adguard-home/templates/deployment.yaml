@@ -53,7 +53,7 @@ spec:
             - name: dns-udp
               containerPort: 53
               protocol: UDP
-            {{- if .Values.dhcp.enabled }}
+            {{- if .Values.serviceDHCP.enabled }}
             - name: dhcp-server-udp
               containerPort: 67
               protocol: UDP
