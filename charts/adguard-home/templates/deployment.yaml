@@ -36,11 +36,9 @@ spec:
           volumeMounts:
             - name: {{ if .Values.persistence.work.existingClaim }}{{ .Values.persistence.work.existingClaim }}{{- else }}{{ template "adguard-home.fullname" . }}-work{{- end }}
               mountPath: /opt/adguardhome/work
-#              subPath: config.yml
               readOnly: false
             - name: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "adguard-home.fullname" . }}-config{{- end }}
               mountPath: /opt/adguardhome/conf
-#              subPath: {{ $name }}
               readOnly: false
             {{- end }}
           ports:
