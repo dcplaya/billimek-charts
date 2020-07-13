@@ -34,10 +34,10 @@ spec:
               value: {{ .Values.timeZone | quote }}
             {{- end }}
           volumeMounts:
-            - name: {{ if .Values.persistence.work.existingClaim }}{{ .Values.persistence.work.existingClaim }}{{- else }}{{ template "adguard-home.fullname" . }}-work{{- end }}
+            - name: work
               mountPath: /opt/adguardhome/work
               readOnly: false
-            - name: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "adguard-home.fullname" . }}-config{{- end }}
+            - name: config
               mountPath: /opt/adguardhome/conf
               readOnly: false
           ports:
