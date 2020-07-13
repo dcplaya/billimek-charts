@@ -20,7 +20,6 @@ spec:
         app.kubernetes.io/name: {{ include "adguard-home.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
-#        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       {{- with .Values.podAnnotations }}
         {{ toYaml . | nindent 8 }}
       {{- end }}
