@@ -29,9 +29,9 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{- if .Values.timeZone }}
+            {{- if .Values.timezone }}
             - name: TZ
-              value: {{ .Values.timeZone | quote }}
+              value: {{ .Values.timezone | quote }}
             {{- end }}
           volumeMounts:
             - name: work
@@ -65,25 +65,6 @@ spec:
               containerPort: 853
               protocol: TCP
             {{- end }}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: api
-            failureThreshold: {{ .Values.probes.liveness.failureThreshold }}
-            periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
-          readinessProbe:
-            httpGet:
-              path: /
-              port: api
-            failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
-            periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
-          startupProbe:
-            httpGet:
-              path: /
-              port: api
-            initialDelaySeconds: {{ .Values.probes.startup.initialDelaySeconds }}
-            failureThreshold: {{ .Values.probes.startup.failureThreshold }}
-            periodSeconds: {{ .Values.probes.startup.periodSeconds }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
