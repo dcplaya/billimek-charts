@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "adguard-home.fullname" . }}-tcp
+  name: {{ include "adguard-home.fullname" . }}-dns-over-tls
   labels:
     app.kubernetes.io/name: {{ include "adguard-home.name" . }}
     helm.sh/chart: {{ include "adguard-home.chart" . }}
