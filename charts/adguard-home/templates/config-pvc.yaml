@@ -3,14 +3,14 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "nzbget.fullname" . }}-config
+  name: {{ template "adguard-home.fullname" . }}-config
   {{- if .Values.persistence.config.skipuninstall }}
   annotations:
     "helm.sh/resource-policy": keep
   {{- end }}
   labels:
-    app.kubernetes.io/name: {{ include "nzbget.name" . }}
-    helm.sh/chart: {{ include "nzbget.chart" . }}
+    app.kubernetes.io/name: {{ include "adguard-home.name" . }}
+    helm.sh/chart: {{ include "adguard-home.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
