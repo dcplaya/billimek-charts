@@ -59,7 +59,7 @@ serviceUDP:
 
 serviceDNSOverTLS:
   enabled: false
-  ## Enable if you use AdGuard as a DHCP Server
+  ## Enable if you use AdGuard as a DNS over TLS/HTTPS server
   type: NodePort
   externalTrafficPolicy: Local
   loadBalancerIP: ""
