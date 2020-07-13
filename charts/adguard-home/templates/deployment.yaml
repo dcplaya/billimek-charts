@@ -40,7 +40,6 @@ spec:
             - name: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "adguard-home.fullname" . }}-config{{- end }}
               mountPath: /opt/adguardhome/conf
               readOnly: false
-            {{- end }}
           ports:
             - name: api
               containerPort: 3000
