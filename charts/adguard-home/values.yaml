@@ -6,8 +6,6 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-replicas: 1
-
 timezone: "UTC"
 
 persistence:
