@@ -37,9 +37,9 @@ spec:
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
   {{- end }}
   ports:
-  - name: api
+  - name: http
     port: 3000
-    targetPort: api
+    targetPort: http
   selector:
     app.kubernetes.io/name: {{ include "adguard-home.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

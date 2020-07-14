@@ -41,7 +41,7 @@ spec:
               mountPath: /opt/adguardhome/conf
               readOnly: false
           ports:
-            - name: api
+            - name: http
               containerPort: 3000
             - name: dns
               containerPort: 53
