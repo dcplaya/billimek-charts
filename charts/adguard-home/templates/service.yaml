@@ -40,6 +40,10 @@ spec:
   - name: http
     port: 3000
     targetPort: http
+  ports:
+  - name: test
+    port: 80
+    targetPort: test
   selector:
     app.kubernetes.io/name: {{ include "adguard-home.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
