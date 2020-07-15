@@ -426,7 +426,7 @@ spec:
       - name: {{ .name }}
         hostPath:
           path: /socat
-          type: FileOrCreate
+          type: DirectoryOrCreate
       {{- end }}
       {{ end }}
       {{- if .Values.extraVolumes  }}{{ toYaml .Values.extraVolumes | trim | nindent 6 }}{{ end }}
