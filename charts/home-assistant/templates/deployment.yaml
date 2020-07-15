@@ -425,8 +425,8 @@ spec:
       {{- range .Values.socat.devices }}
       - name: {{ .name }}
         hostPath:
-          path: /dev{{ .mountPath }}
-          type: FileOrCreate
+          path: /socat
+          type: FolderOrCreate
       {{- end }}
       {{ end }}
       {{- if .Values.extraVolumes  }}{{ toYaml .Values.extraVolumes | trim | nindent 6 }}{{ end }}
