@@ -145,7 +145,7 @@ spec:
           {{- end }}
           {{- if .Values.socat.enabled }}
           {{- range .Values.socat.devices }}
-          - mountPath: /dev/socat # {{ .mountPath }}
+          - mountPath: /dev{{ .mountPath }}
             name: {{ .name }}
           {{- end }}
           {{- end }}
@@ -372,12 +372,12 @@ spec:
           args:
           {{- range .Values.socat.devices }}
           - '-dd'
-          - 'pty,link=/dev/socat{{ .mountPath }},raw,user=0,group=0,mode=777'
+          - 'pty,link=/dev{{ .mountPath }},raw,user=0,group=0,mode=777'
           - 'tcp:{{ .ip }}:{{ .port }}' # ',forever,interval=10'
           {{- end }}
           volumeMounts:
           {{- range .Values.socat.devices }}
-          - mountPath: /dev/socat # {{ .mountPath }}
+          - mountPath: /dev{{ .mountPath }}
             name: {{ .name }}
           {{- end }}
           securityContext:
@@ -425,8 +425,8 @@ spec:
       {{- range .Values.socat.devices }}
       - name: {{ .name }}
         hostPath:
-          path: /socat
-          type: DirectoryOrCreate
+          path: /dev{{ .mountPath }}
+          type: FileOrCreate
       {{- end }}
       {{ end }}
       {{- if .Values.extraVolumes  }}{{ toYaml .Values.extraVolumes | trim | nindent 6 }}{{ end }}
