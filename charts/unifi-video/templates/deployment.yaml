@@ -79,6 +79,11 @@ spec:
             - name: data
               mountPath: /var/lib/unifi-video/videos
               subPath: videos
+            {{- range .Values.persistence.extraExistingClaimMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              readOnly: {{ .readOnly }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /
@@ -87,27 +92,30 @@ spec:
             httpGet:
               path: /
               port: http
-          {{- with .Values.resources }}
           resources:
-            {{- toYaml . | indent 12 | trim }}
-          {{- end }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | indent 8 | trim }}
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+      - name: data
+      {{- if .Values.persistence.config.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "unifi-video.fullname" . }}-data{{- end }}
+      {{- else }}
+        emptyDir: {}
       {{- end }}
+      {{- range .Values.persistence.extraExistingClaimMounts }}
+      - name: {{ .name }}
+        persistentVolumeClaim:
+          claimName: {{ .existingClaim }}
+      {{- end }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
     {{- with .Values.affinity }}
       affinity:
-        {{- toYaml . | indent 8 | trim }}
+{{ toYaml . | indent 8 }}
     {{- end }}
     {{- with .Values.tolerations }}
       tolerations:
-        {{- toYaml . | indent 8 | trim }}
+{{ toYaml . | indent 8 }}
     {{- end }}
-      volumes:
-        - name: data
-        {{- if .Values.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ template "unifi-video.fullname" . }}-data{{- end }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
