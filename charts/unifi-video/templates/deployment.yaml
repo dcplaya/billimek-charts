@@ -76,7 +76,7 @@ spec:
             - name: config
               mountPath: /var/lib/unifi-video
               subPath: storage
-            - name: data
+            - name: video
               mountPath: /var/lib/unifi-video/videos
               subPath: videos
             {{- range .Values.persistence.extraExistingClaimMounts }}
