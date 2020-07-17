@@ -61,6 +61,25 @@ persistence:
     # subPath: some-subpath
     accessMode: ReadWriteOnce
     size: 5Gi
+  video:
+    enabled: true
+    annotations: {}
+    existingClaim: ""
+    ## unifi video video footage data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    # storageClass: "-"
+    ##
+    ## If you want to reuse an existing claim, you can pass the name of the PVC using
+    ## the existingClaim variable
+    # existingClaim: your-claim
+    # subPath: some-subpath
+    accessMode: ReadWriteOnce
+    size: 20Gi
   extraExistingClaimMounts: []
     # - name: external-mount
     #   mountPath: /srv/external-mount

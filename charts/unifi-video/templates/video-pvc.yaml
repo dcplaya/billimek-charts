@@ -1,0 +1,30 @@
+{{- if and .Values.persistence.video.enabled (not .Values.persistence.video.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "unifi-video.fullname" . }}-video
+  labels:
+    app.kubernetes.io/name: {{ include "unifi-video.name" . }}
+    helm.sh/chart: {{ include "unifi-video.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+  {{- range $key, $value := . }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
+{{- end }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.video.accessMode | quote}}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.video.size | quote }}
+{{- if .Values.persistence.video.storageClass }}
+{{- if (eq "-" .Values.persistence.video.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.video.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}

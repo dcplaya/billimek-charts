@@ -19,10 +19,10 @@ spec:
         image: busybox
         command: ["sh", "-c", "chown -R 99:100 /var/lib/unifi-video"]
         volumeMounts:
-        - name: data
+        - name: config
           mountPath: /var/lib/unifi-video
           subPath: storage
-        - name: data
+        - name: video
           mountPath: /var/lib/unifi-video/videos
           subPath: videos
     {{- with .Values.imagePullSecrets }}
@@ -73,7 +73,7 @@ spec:
               containerPort: 7446
               protocol: TCP
           volumeMounts:
-            - name: data
+            - name: config
               mountPath: /var/lib/unifi-video
               subPath: storage
             - name: data
@@ -95,10 +95,17 @@ spec:
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
-      - name: data
+      - name: config
       {{- if .Values.persistence.config.enabled }}
         persistentVolumeClaim:
-          claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "unifi-video.fullname" . }}-data{{- end }}
+          claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "unifi-video.fullname" . }}-config{{- end }}
+      {{- else }}
+        emptyDir: {}
+      {{- end }}
+      - name: video
+      {{- if .Values.persistence.video.enabled }}
+        persistentVolumeClaim:
+          claimName: {{ if .Values.persistence.video.existingClaim }}{{ .Values.persistence.video.existingClaim }}{{- else }}{{ template "unifi-video.fullname" . }}-video{{- end }}
       {{- else }}
         emptyDir: {}
       {{- end }}
