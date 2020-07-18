@@ -24,7 +24,7 @@ spec:
           subPath: storage
         - name: video
           mountPath: /var/lib/unifi-video/videos
-          subPath: videos
+          subPath: {{ if .Values.persistence.video.subPath }}{{ .Values.persistence.video.subPath }}{{- else }}videos{{- end }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | indent 8 | trim }}
@@ -85,7 +85,7 @@ spec:
               subPath: storage
             - name: video
               mountPath: /var/lib/unifi-video/videos
-              subPath: videos
+              subPath: {{ if .Values.persistence.video.subPath }}{{ .Values.persistence.video.subPath }}{{- else }}videos{{- end }}
             {{- range .Values.persistence.extraExistingClaimMounts }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
