@@ -17,7 +17,7 @@ spec:
       initContainers:
       - name: {{ include "unifi-video.name" . }}-permissions
         image: busybox
-        command: ["sh", "-c", "chown -R 99:100 /var/lib/unifi-video"]
+        command: ["sh", "-c", "chown -R {{ .Values.puid }}:{{ .Values.guid }} /var/lib/unifi-video"]
         volumeMounts:
         - name: config
           mountPath: /var/lib/unifi-video
@@ -72,6 +72,13 @@ spec:
             - name: httpsvideo
               containerPort: 7446
               protocol: TCP
+          env:
+            - name: TZ
+              value: "{{ .Values.timezone }}"
+            - name: PUID
+              value: "{{ .Values.puid }}"
+            - name: PGID
+              value: "{{ .Values.pgid }}"
           volumeMounts:
             - name: config
               mountPath: /var/lib/unifi-video

@@ -13,6 +13,10 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+timezone: UTC
+puid: 1001
+pgid: 1001
+
 podSecurityContext: {}
   # fsGroup: 2000
 
