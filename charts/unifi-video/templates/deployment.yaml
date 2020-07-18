@@ -78,7 +78,7 @@ spec:
             - name: PUID
               value: "{{ .Values.puid }}"
             - name: PGID
-              value: "{{ .Values.pgid }}"
+              value: "{{ .Values.guid }}"
           volumeMounts:
             - name: config
               mountPath: /var/lib/unifi-video
