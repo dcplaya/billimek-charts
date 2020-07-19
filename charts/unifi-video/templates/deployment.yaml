@@ -89,6 +89,7 @@ spec:
             {{- range .Values.persistence.extraExistingClaimMounts }}
             - name: {{ .name }}
               mountPath: {{ .mountPath }}
+              subPath: {{ if .subPath }}{{ .subPath }}{{- else }}{{ .name }}{{- end }}
               readOnly: {{ .readOnly }}
             {{- end }}
           livenessProbe:
