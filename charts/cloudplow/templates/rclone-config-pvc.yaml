@@ -1,0 +1,29 @@
+
+{{- if and .Values.persistence.rclone-config.enabled (not .Values.persistence.rclone-config.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "cloudplow.fullname" . }}-rclone-config
+  {{- if .Values.persistence.rclone-config.skipuninstall }}
+  annotations:
+    "helm.sh/resource-policy": keep
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "cloudplow.name" . }}
+    helm.sh/chart: {{ include "cloudplow.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  accessModes:
+    - {{ .Values.persistence.rclone-config.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.rclone-config.size | quote }}
+{{- if .Values.persistence.rclone-config.storageClass }}
+{{- if (eq "-" .Values.persistence.rclone-config.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.persistence.rclone-config.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end -}}

@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cloudplow.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "cloudplow.name" . }}
+    helm.sh/chart: {{ include "cloudplow.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "cloudplow.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "cloudplow.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{ toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: TZ
+              value: "{{ .Values.timezone }}"
+            - name: PUID
+              value: "{{ .Values.puid }}"
+            - name: PGID
+              value: "{{ .Values.pgid }}"
+            - name: CLOUDPLOW_CONFIG
+              value: "/config/config.json"
+            - name: CLOUDPLOW_LOGFILE
+              value: "/config/cloudplow.log"
+            - name: CLOUDPLOW_LOGLEVEL
+              value: "DEBUG"
+            - name: CLOUDPLOW_CACHEFILE
+              value: "/config/cache.db"
+          volumeMounts:
+            - name: config
+              mountPath: "/config"
+              subPath: config.json
+            - name: rclone-config
+              mountPath: "/rclone_config/"
+              subPath:
+            - name: media
+              mountPath: "/data/imported_media"
+              subPath:
+            {{ if .Values.persistence.serviceAccounts.enabled }}
+            - name: rclone-serviceAccounts
+              mountPath: "/service_accounts/"
+              subPath:
+            {{ end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: config
+        {{- if .Values.persistence.config.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.config.existingClaim }}{{ .Values.persistence.config.existingClaim }}{{- else }}{{ template "cloudplow.fullname" . }}-config{{- end }}
+        {{- else }}
+          emptyDir: {}
+        {{ end }}
+        - name: rclone-config
+        {{- if .Values.persistence.rclone-config.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.rclone-config.existingClaim }}{{ .Values.persistence.rclone-config.existingClaim }}{{- else }}{{ template "cloudplow.fullname" . }}-rclone-config{{- end }}
+        {{- else }}
+          emptyDir: {}
+        {{ end }}
+
+
+
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
