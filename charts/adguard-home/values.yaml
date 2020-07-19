@@ -85,7 +85,7 @@ service:
 serviceTCP:
   enabled: false
   type: NodePort
-#  externalTrafficPolicy: Local
+  # externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -95,7 +95,7 @@ serviceTCP:
 serviceUDP:
   enabled: true
   type: NodePort
-#  externalTrafficPolicy: Local
+  # externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -106,7 +106,7 @@ serviceDNSOverTLS:
   enabled: false
   ## Enable if you use AdGuard as a DNS over TLS/HTTPS server
   type: NodePort
-#  externalTrafficPolicy: Local
+  # externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -117,7 +117,7 @@ serviceDHCP:
   enabled: false
   ## Enable if you use AdGuard as a DHCP Server
   type: NodePort
-#  externalTrafficPolicy: Local
+  # externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -150,7 +150,7 @@ persistence:
     # existingClaim: your-claim
     # subPath: some-subpath
     accessMode: ReadWriteOnce
-    size: 10Gi
+    size: 20Mi
     ## Do not delete the pvc upon helm uninstall
     skipuninstall: false
   work:
