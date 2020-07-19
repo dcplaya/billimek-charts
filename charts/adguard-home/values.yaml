@@ -85,7 +85,7 @@ service:
 serviceTCP:
   enabled: false
   type: NodePort
-  externalTrafficPolicy: Local
+#  externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -95,7 +95,7 @@ serviceTCP:
 serviceUDP:
   enabled: true
   type: NodePort
-  externalTrafficPolicy: Local
+#  externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -106,7 +106,7 @@ serviceDNSOverTLS:
   enabled: false
   ## Enable if you use AdGuard as a DNS over TLS/HTTPS server
   type: NodePort
-  externalTrafficPolicy: Local
+#  externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
@@ -117,7 +117,7 @@ serviceDHCP:
   enabled: false
   ## Enable if you use AdGuard as a DHCP Server
   type: NodePort
-  externalTrafficPolicy: Local
+#  externalTrafficPolicy: Local
   loadBalancerIP: ""
     # a fixed LoadBalancer IP
   annotations: {}
