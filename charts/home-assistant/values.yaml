@@ -65,17 +65,6 @@ ingress:
 
 hostNetwork: false
 
-cmdOverride:
-  enabled: false
-  shellArgs: "python -m homeassistant --config /config"
-  # default to run HA at least, more can be added by changing it to
-  #  "zha && zwave && python -m homeassistant --config /config"
-  #  zha/zwav are binaries mounted in /usr/bin inside the container using a confiMap
-  #
-  #  - "pty,link=/dev/ttyUSB0,raw,user=0,group=0,mode=777"
-  #  - "tcp:ser2sock.home-automation.svc:10000"
-  # Allows mounting of a ser2sock device via tcp
-
 persistence:
   enabled: true
   ## home-assistant data Persistent Volume Storage Class
@@ -332,6 +321,27 @@ appdaemon:
     loadBalancerIP: ""
     loadBalancerSourceRanges: []
     # nodePort: 30000
+
+socat:
+  enabled: false
+  ## Can be used in conjunction with a ser2sock deployment to use serial
+  ## devices over IP. Currently only works with 1 device but ideally can be used
+  ## with multiple devices
+
+  ## socat container image
+  ##
+  image:
+    repository: alpine/socat
+    tag: 1.7.3.4-r0
+    pullPolicy: IfNotPresent
+
+  ## ip can be a domain name or actual IP address
+  ## mountPath will be mounted in /socat{{ mountPath }} in both socat and HA pods
+  devices:
+    - name: zigbee-device
+      mountPath: /zigbee
+      ip: ser2sock-zigbee.home-automation.svc
+      port: 10000
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

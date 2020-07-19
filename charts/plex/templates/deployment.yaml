@@ -210,7 +210,11 @@ spec:
             name: "extradata-{{ .name }}"
           {{- end }}
           {{-  range .Values.persistence.extraMounts }}
+<<<<<<< HEAD
           - mountPath: "/{{ .mountPath }}"
+=======
+          - mountPath: "/{{ .name }}"
+>>>>>>> [plex] Allow custom extraMount paths (#270)
             name: "{{ .name }}"
           {{- end }}
           - name: shared
