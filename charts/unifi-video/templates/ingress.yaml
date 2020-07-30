@@ -32,7 +32,11 @@ spec:
         paths:
           - path: {{ $ingressPath }}
             backend:
+              {{- if not .Values.unifiedService.enabled }}
               serviceName: {{ $fullName }}-tcp
+              {{- else }}
+              serviceName: {{ $fullName }}
+              {{- end }}
               servicePort: http
   {{- end }}
 {{- end }}
