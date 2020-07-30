@@ -1,0 +1,83 @@
+{{ if .Values.unifiedService.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "unifi-video.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "unifi-video.name" . }}
+    helm.sh/chart: {{ include "unifi-video.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.unifiedService.labels }}
+{{ toYaml .Values.unifiedService.labels | indent 4 }}
+{{- end }}
+{{- with .Values.unifiedService.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if (or (eq .Values.unifiedService.type "ClusterIP") (empty .Values.unifiedService.type)) }}
+  type: ClusterIP
+  {{- if .Values.unifiedService.clusterIP }}
+  clusterIP: {{ .Values.unifiedService.clusterIP }}
+  {{end}}
+{{- else if eq .Values.unifiedService.type "LoadBalancer" }}
+  type: {{ .Values.unifiedService.type }}
+  {{- if .Values.unifiedService.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.unifiedService.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.unifiedService.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.unifiedService.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.unifiedService.type }}
+{{- end }}
+{{- if .Values.unifiedService.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.unifiedService.externalIPs | indent 4 }}
+{{- end }}
+  {{- if .Values.unifiedService.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.unifiedService.externalTrafficPolicy }}
+  {{- end }}
+  ports:
+    - name: rtmp
+      port: 1935
+      targetPort: rtmp
+      protocol: TCP
+    - name: rtmps
+      port: 7444
+      targetPort: rtmps
+      protocol: TCP
+    - name: rtsp
+      port: 7447
+      targetPort: rtsp
+      protocol: TCP
+    - name: inbound
+      port: 6666
+      targetPort: inbound
+      protocol: TCP
+    - name: management
+      port: 7442
+      targetPort: management
+      protocol: TCP
+    - name: https
+      port: 7443
+      protocol: TCP
+      targetPort: https
+    - name: httpvideo
+      port: 7445
+      protocol: TCP
+      targetPort: httpvideo
+    - name: httpsvideo
+      port: 7446
+      protocol: TCP
+      targetPort: httpsvideo
+    - name: talkback
+      port: 7004
+      protocol: UDP
+      targetPort: talkback
+  selector:
+    app.kubernetes.io/name: {{ include "unifi-video.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{ end }}
