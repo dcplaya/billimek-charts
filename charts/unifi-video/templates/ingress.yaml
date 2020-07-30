@@ -1,6 +1,7 @@
 {{- if .Values.ingress.enabled }}
 {{- $fullName := include "unifi-video.fullname" . -}}
 {{- $ingressPath := .Values.ingress.path }}
+{{- $unifiedService := .Values.unifiedService.enabled }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -32,7 +33,7 @@ spec:
         paths:
           - path: {{ $ingressPath }}
             backend:
-              {{- if not .Values.unifiedService.enabled }}
+              {{- if not $unifiedService }}
               serviceName: {{ $fullName }}-tcp
               {{- else }}
               serviceName: {{ $fullName }}
