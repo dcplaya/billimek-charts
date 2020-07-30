@@ -72,7 +72,7 @@ spec:
     - name: httpsvideo
       port: 7446
       protocol: TCP
-      targetPort: httpsvideo#
+      targetPort: httpsvideo
 #    - name: talkback
 #      port: 7004
 #      protocol: UDP
