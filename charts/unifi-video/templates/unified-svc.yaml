@@ -61,6 +61,10 @@ spec:
       port: 7442
       targetPort: management
       protocol: TCP
+    - name: http
+      port: 7080
+      protocol: TCP
+      targetPort: http
     - name: https
       port: 7443
       protocol: TCP
