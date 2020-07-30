@@ -72,11 +72,11 @@ spec:
     - name: httpsvideo
       port: 7446
       protocol: TCP
-      targetPort: httpsvideo
-    - name: talkback
-      port: 7004
-      protocol: UDP
-      targetPort: talkback
+      targetPort: httpsvideo#
+#    - name: talkback
+#      port: 7004
+#      protocol: UDP
+#      targetPort: talkback
   selector:
     app.kubernetes.io/name: {{ include "unifi-video.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
