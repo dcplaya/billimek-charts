@@ -39,13 +39,5 @@ spec:
               serviceName: {{ $fullName }}
               {{- end }}
               servicePort: http
-          - path: {{ $ingressPath }}
-            backend:
-              {{- if not $unifiedService }}
-              serviceName: {{ $fullName }}-tcp
-              {{- else }}
-              serviceName: {{ $fullName }}
-              {{- end }}
-              servicePort: httpvideo
   {{- end }}
 {{- end }}
