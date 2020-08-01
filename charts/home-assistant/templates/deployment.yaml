@@ -137,6 +137,9 @@ spec:
           {{- else }}
           - mountPath: {{ .hostPath }}
           {{- end }}
+            {{- if .subPath }}
+            subPath: {{ .subPath }}
+            {{- end }}
             name: {{ .name }}
           {{- end }}
           {{- if .Values.git.enabled }}
