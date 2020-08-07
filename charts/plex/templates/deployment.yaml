@@ -241,7 +241,7 @@ spec:
           image: "{{ .Values.plex_autoscan.image.repository }}:{{ .Values.plex_autoscan.image.tag }}"
           imagePullPolicy: {{ .Values.plex_autoscan.image.pullPolicy }}
           ports:
-            - name: autoscan_http
+            - name: autoscan-http
               containerPort: {{ .Values.plex_autoscan.config.SERVER_PORT }}
               protocol: TCP
           env:
@@ -276,7 +276,7 @@ spec:
             {{ end }}
           {{ end }}
           # Mount points for plex_autoscan configMap
-          - name: plex_autoscan-configMap
+          - name: plex-autoscan-configMap
             mountPath: /config/config/config.json
             subPath: config.json
         {{- end }}

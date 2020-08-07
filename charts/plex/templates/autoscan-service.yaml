@@ -38,10 +38,10 @@ spec:
   externalTrafficPolicy: {{ .Values.plex_autoscan.serviceTCP.externalTrafficPolicy }}
   {{- end }}
   ports:
-    - name: autoscan_http
+    - name: autoscan-http
       port: {{ .Values.plex_autoscan.serviceTCP.port }}
       protocol: TCP
-      targetPort: autoscan_http
+      targetPort: autoscan-http
 {{ if (and (eq .Values.plex_autoscan.serviceTCP.type "NodePort") (not (empty .Values.plex_autoscan.serviceTCP.nodePort))) }}
       nodePort: {{.Values.plex_autoscan.serviceTCP.nodePort}}
 {{ end }}
