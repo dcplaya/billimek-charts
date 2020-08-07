@@ -1,3 +1,4 @@
+{{- if (.Values.plex_autoscan.enabled) }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -46,3 +47,4 @@ spec:
 {{ end }}
   selector:
     {{- include "plex.selectorLabels" . | nindent 4 }}
+{{- end }}
