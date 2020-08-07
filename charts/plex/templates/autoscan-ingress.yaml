@@ -1,11 +1,11 @@
 {{- if and (.Values.plex_autoscan.enabled) (.Values.plex_autoscan.ingress.enabled) }}
 {{- $fullName := include "plex.fullname" . -}}
-{{- $servicePort := .Values.plex_autoscan.config.SERVER_PORT -}}
+{{- $servicePort := .Values.plex_autoscan.serviceTCP.port -}}
 {{- $ingressPath := .Values.plex_autoscan.ingress.path -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-plex_autoscan
+  name: {{ $fullName }}-autoscan
   labels:
     app.kubernetes.io/name: {{ include "plex.name" . }}
     helm.sh/chart: {{ include "plex.chart" . }}
