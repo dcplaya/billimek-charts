@@ -1,6 +1,6 @@
 helm-extra-args: --timeout 600s
 chart-dirs:
-  - charts
+  - charts/plex
 chart-repos:
   - billimek=https://billimek.com/billimek-charts
   - bitnami=https://charts.bitnami.com/bitnami
