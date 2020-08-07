@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "plex.fullname" . }}-autoscan
+  labels:
+    {{- include "plex.labels" . | nindent 4 }}
+{{- if .Values.plex_autoscan.serviceTCP.labels }}
+{{ toYaml .Values.plex_autoscan.serviceTCP.labels | indent 4 }}
+{{- end }}
+{{- with .Values.plex_autoscan.serviceTCP.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+{{- if (or (eq .Values.plex_autoscan.serviceTCP.type "ClusterIP") (empty .Values.plex_autoscan.serviceTCP.type)) }}
+  type: ClusterIP
+  {{- if .Values.plex_autoscan.serviceTCP.clusterIP }}
+  clusterIP: {{ .Values.plex_autoscan.serviceTCP.clusterIP }}
+  {{end}}
+{{- else if eq .Values.plex_autoscan.serviceTCP.type "LoadBalancer" }}
+  type: {{ .Values.plex_autoscan.serviceTCP.type }}
+  {{- if .Values.plex_autoscan.serviceTCP.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.plex_autoscan.serviceTCP.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.plex_autoscan.serviceTCP.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.plex_autoscan.serviceTCP.loadBalancerSourceRanges | indent 4 }}
+  {{- end -}}
+{{- else }}
+  type: {{ .Values.plex_autoscan.serviceTCP.type }}
+{{- end }}
+{{- if .Values.plex_autoscan.serviceTCP.externalIPs }}
+  externalIPs:
+{{ toYaml .Values.plex_autoscan.serviceTCP.externalIPs | indent 4 }}
+{{- end }}
+  {{- if .Values.plex_autoscan.serviceTCP.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.plex_autoscan.serviceTCP.externalTrafficPolicy }}
+  {{- end }}
+  ports:
+    - name: autoscan_http
+      port: {{ .Values.plex_autoscan.serviceTCP.port }}
+      protocol: TCP
+      targetPort: autoscan_http
+{{ if (and (eq .Values.plex_autoscan.serviceTCP.type "NodePort") (not (empty .Values.plex_autoscan.serviceTCP.nodePort))) }}
+      nodePort: {{.Values.plex_autoscan.serviceTCP.nodePort}}
+{{ end }}
+  selector:
+    {{- include "plex.selectorLabels" . | nindent 4 }}

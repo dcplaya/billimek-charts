@@ -15,6 +15,8 @@ claimToken: ""
 
 # Set the timezone of the plex server
 timezone: "UTC"
+puid: 1000
+pgid: 1000
 
 # add your pod network subnet to the `List of IP addresses and networks that are allowed without auth`
 # This will override the manual settings, so only use this if you will not need to change it manually.
@@ -330,3 +332,159 @@ proxy:
   # http: "http://proxy:8080"
   # https: "https://proxy:8080"
   # noproxy: "localhost,127.0.0.1,10.96.0.0/12,10.244.0.0/12"
+
+plex_autoscan:
+  enabled: false
+  ingress:
+    enabled: false
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    path: /
+    hosts:
+      - chart-example.local
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+    serviceTCP:
+      type: ClusterIP
+      port: 3468
+      ## Specify the nodePort value for the LoadBalancer and NodePort service types.
+      ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+      ##
+      # nodePort:
+      ## Provide any additional annotations which may be required. This can be used to
+      ## set the LoadBalancer service type to internal only.
+      ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
+      ##
+      annotations: {}
+      # metallb.universe.tf/allow-shared-ip: plex-svc
+      labels: {}
+      ## Use loadBalancerIP to request a specific static IP,
+      ## otherwise leave blank
+      ##
+      loadBalancerIP:
+      # loadBalancerSourceRanges: []
+      ## Set the externalTrafficPolicy in the Service to either Cluster or Local
+      # externalTrafficPolicy: Cluster
+      
+  ## Start of the actual config data for the ConfigMap
+  ## Paths (PLEX_DATABASE_PATH, PLEX_LD_LIBRARY_PATH, PLEX_SCANNER, PLEX_SUPPORT_DIR, RCLONE.CONFIG)
+  ## should not be changed. They are paths internally for plex_autoscan
+  ## docker should not be enabled since the sidecar is set up to access Plex binaries directly
+  config:
+    DOCKER_NAME: plex
+    GOOGLE:
+      ENABLED: false
+      CLIENT_ID: ''
+      CLIENT_SECRET: ''
+      ALLOWED:
+        FILE_PATHS: []
+        FILE_EXTENSIONS: true
+        FILE_EXTENSIONS_LIST:
+        - webm
+        - mkv
+        - flv
+        - vob
+        - ogv
+        - ogg
+        - drc
+        - gif
+        - gifv
+        - mng
+        - avi
+        - mov
+        - qt
+        - wmv
+        - yuv
+        - rm
+        - rmvb
+        - asf
+        - amv
+        - mp4
+        - m4p
+        - m4v
+        - mpg
+        - mp2
+        - mpeg
+        - mpe
+        - mpv
+        - m2v
+        - m4v
+        - svi
+        - 3gp
+        - 3g2
+        - mxf
+        - roq
+        - nsv
+        - f4v
+        - f4p
+        - f4a
+        - f4b
+        - mp3
+        - flac
+        - ts
+        MIME_TYPES: true
+        MIME_TYPES_LIST:
+        - video
+      TEAMDRIVE: false
+      TEAMDRIVES: []
+      POLL_INTERVAL: 60
+      SHOW_CACHE_LOGS: false
+    PLEX_ANALYZE_DIRECTORY: true
+    PLEX_ANALYZE_TYPE: basic
+    PLEX_FIX_MISMATCHED: false
+    PLEX_FIX_MISMATCHED_LANG: en
+    PLEX_DATABASE_PATH: "/plex_config/Library/Application Support/Plex Media Server/Plug-in Support/Databases/com.plexapp.plugins.library.db"
+    PLEX_EMPTY_TRASH: false
+    PLEX_EMPTY_TRASH_CONTROL_FILES:
+    - "/mnt/unionfs/mounted.bin"
+    PLEX_EMPTY_TRASH_MAX_FILES: 100
+    PLEX_EMPTY_TRASH_ZERO_DELETED: false
+    PLEX_LD_LIBRARY_PATH: "/usr/lib/plexmediaserver/lib"
+    PLEX_SCANNER: "/usr/lib/plexmediaserver/Plex\\ Media\\ Scanner"
+    PLEX_SUPPORT_DIR: "/plex_config/plexmediaserver/Library/Application\\ Support"
+    PLEX_USER: plex
+    PLEX_TOKEN: ''
+    PLEX_LOCAL_URL: http://localhost:32400
+    PLEX_CHECK_BEFORE_SCAN: false
+    PLEX_WAIT_FOR_EXTERNAL_SCANNERS: true
+    RCLONE:
+      BINARY: "/usr/bin/rclone"
+      CONFIG: "/rclone/rclone.conf"
+      CRYPT_MAPPINGS: {}
+      RC_CACHE_REFRESH:
+        ENABLED: false
+        FILE_EXISTS_TO_REMOTE_MAPPINGS:
+          Media/:
+          - "/mnt/rclone/Media/"
+        RC_URL: http://localhost:5572
+    RUN_COMMAND_BEFORE_SCAN: ''
+    RUN_COMMAND_AFTER_SCAN: ''
+    SERVER_ALLOW_MANUAL_SCAN: false
+    SERVER_FILE_EXIST_PATH_MAPPINGS:
+      "/mnt/unionfs/media/":
+      - "/data/"
+    SERVER_IGNORE_LIST:
+    - "/.grab/"
+    - ".DS_Store"
+    - Thumbs.db
+    SERVER_IP: 0.0.0.0
+    SERVER_MAX_FILE_CHECKS: 10
+    SERVER_FILE_CHECK_DELAY: 60
+    SERVER_PASS: 9c4b81fe234e4d6eb9011cefe514d915
+    SERVER_PATH_MAPPINGS:
+      "/mnt/unionfs/":
+      - "/home/seed/media/fused/"
+    SERVER_PORT: 3468
+    SERVER_SCAN_DELAY: 180
+    SERVER_SCAN_FOLDER_ON_FILE_EXISTS_EXHAUSTION: false
+    SERVER_SCAN_PRIORITIES:
+      '1':
+      - "/Movies/"
+      '2':
+      - "/TV/"
+    SERVER_USE_SQLITE: true
+    USE_DOCKER: false
+    USE_SUDO: false

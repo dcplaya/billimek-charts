@@ -40,3 +40,17 @@ data:
 # a different file or something.
 {{ (tpl (.Files.Glob "configs/42-pkcs-mangler").AsConfig . ) | indent 2 }}
 {{- end -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-autoscan
+  labels:
+    app.kubernetes.io/name: {{ include "plex.name" . }}
+    helm.sh/chart: {{ include "plex.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  config.json: |
+    {{- toJson .Values.plex_autoscan.config | nindent 4 }}
+{{- end }}

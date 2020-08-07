@@ -235,6 +235,52 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+###########################plex_autoscan########################################
+        {{- if .Values.plex_autoscan.enable }}
+        - name: {{ .Chart.Name }}-autoscan
+          image: "{{ .Values.plex_autoscan.image.repository }}:{{ .Values.plex_autoscan.image.tag }}"
+          imagePullPolicy: {{ .Values.plex_autoscan.image.pullPolicy }}
+          ports:
+            - name: autoscan_http
+              containerPort: {{ .Values.plex_autoscan.config.SERVER_PORT }}
+              protocol: TCP
+          env:
+          - name: TZ
+            value: "{{ .Values.timezone }}"
+          - name: PUID
+            value: "{{ .Values.puid }}"
+          - name: PGID
+            value: "{{ .Values.pgid }}"
+          volumeMounts:
+          # Mount points to interface with Plex
+          - name: config
+            mountPath: /plex_config
+            {{- if .Values.persistence.config.subPath }}
+            subPath: {{ .Values.persistence.config.subPath }}
+            {{- end }}
+          - name: plex_binary
+            mountPath: /usr/lib/plexmediaserver
+          {{-  range .Values.persistence.extraMounts }}
+          - name: {{ .name }}
+            {{- if .mountPath }}
+            mountPath: /{{ .mountPath }}
+            {{- else }}
+            mountPath: /{{ .name }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.persistence.data.enabled }}
+          - name: data
+            mountPath: /data
+            {{- if .Values.persistence.data.subPath }}
+            subPath: {{ .Values.persistence.data.subPath }}
+            {{ end }}
+          {{ end }}
+          # Mount points for plex_autoscan configMap
+          - name: plex_autoscan-configMap
+            mountPath: /config/config/config.json
+            subPath: config.json
+        {{- end }}
+###########################END plex_autoscan####################################
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
