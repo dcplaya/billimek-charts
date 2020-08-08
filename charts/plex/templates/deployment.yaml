@@ -236,7 +236,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 ###########################plex_autoscan########################################
-        {{- if .Values.plex_autoscan.enable }}
+        {{- if .Values.plex_autoscan.enabled }}
         - name: {{ .Chart.Name }}-autoscan
           image: "{{ .Values.plex_autoscan.image.repository }}:{{ .Values.plex_autoscan.image.tag }}"
           imagePullPolicy: {{ .Values.plex_autoscan.image.pullPolicy }}
