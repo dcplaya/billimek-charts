@@ -45,7 +45,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Chart.Name }}-autoscan
+  name: {{ include "plex.fullname" . }}-autoscan
   labels:
     app.kubernetes.io/name: {{ include "plex.name" . }}
     helm.sh/chart: {{ include "plex.chart" . }}
