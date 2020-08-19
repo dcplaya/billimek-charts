@@ -47,6 +47,7 @@ The following tables lists the configurable parameters of the Librespeed chart a
 | `timezone`                         | Default timezone                                                        | `UTC`                     |
 | `puid`                             | Default UID                                                             | `1000`                    |
 | `pgid`                             | Default GID                                                             | `1000`                    |
+| `telemetry`                        | Enable/Disable history                                                  | `false`                   |
 | `password`                         | Default webui password for the history database                         | `ChangeMe`                |
 | `dbType`                           | Default database type. Leaving blank applies default                    | `sqlite`                  |
 | `dbName`                           | Default database name. Required if dbType is `mysql` or `postresql`     | ``                        |

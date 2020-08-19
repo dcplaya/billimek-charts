@@ -56,8 +56,12 @@ spec:
               value: "{{ .Values.puid }}"
             - name: GUID
               value: "{{ .Values.pgid }}"
+            {{ if .Values.telemetry }}
+            - name: TELEMETRY
+              value: "{{ .Values.telemetry }}"
             - name: PASSWORD
               value: "{{ .Values.password }}"
+            {{ end }}
             {{ if ne .Values.dbType "sqlite" }}
             - name: DB_TYPE
               value: "{{ .Values.dbType }}"

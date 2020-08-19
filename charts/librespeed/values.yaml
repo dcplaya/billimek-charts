@@ -19,8 +19,11 @@ readinessProbePath: /
 timezone: "UTC"
 puid: "1000"
 pgid: "1000"
+
+## Store results? If enabled, password is required
+telemetry: false
 ## Password for histroy database
-password: "ChangeMe"
+# password: "ChangeMe"
 
 ## The following are optional. The default is sqlite database and no other options are needed
 ## Other database types are "mysql" or "postgresql". If set, the remaining options are required
