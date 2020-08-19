@@ -58,7 +58,7 @@ spec:
               value: "{{ .Values.pgid }}"
             - name: PASSWORD
               value: "{{ .Values.password }}"
-            {{ if not eq .Values.dbType "sqlite"}}
+            {{ if ne .Values.dbType "sqlite" }}
             - name: DB_TYPE
               value: "{{ .Values.dbType }}"
             - name: DB_NAME
