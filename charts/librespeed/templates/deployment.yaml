@@ -61,19 +61,17 @@ spec:
               value: "{{ .Values.telemetry }}"
             - name: PASSWORD
               value: "{{ .Values.password }}"
+            - name: ENABLE_ID_OBFUSCATION
+              value: "{{ .Values.idObfuscation }}"
+            - name: REDACT_IP_ADDRESSES
+              value: "{{ .Values.redactIPAddresses }}"
+            - name: EMAIL
+              value: "{{ .Values.email }}"
             {{ end }}
-            {{ if ne .Values.dbType "sqlite" }}
-            - name: DB_TYPE
-              value: "{{ .Values.dbType }}"
-            - name: DB_NAME
-              value: "{{ .Values.dbName }}"
-            - name: DB_HOSTNAME
-              value: "{{ .Values.dbHostname }}"
-            - name: DB_USERNAME
-              value: "{{ .Values.dbUsername }}"
-            - name: DB_PASSWORD
-              value: "{{ .Values.dbPassword }}"
-           {{ end }}
+            - name: TITLE
+              value: "{{ .Values.title }}"
+            - name: DISTANCE
+              value: "{{ .Values.distance }}"
           volumeMounts:
             - name: config
               mountPath: /config

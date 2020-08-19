@@ -6,8 +6,8 @@
 strategyType: Recreate
 
 image:
-  repository: linuxserver/librespeed
-  tag: 5.2-ls25
+  repository: adolfintel/speedtest
+  tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -22,16 +22,19 @@ pgid: "1000"
 
 ## Store results? If enabled, password is required
 telemetry: false
-## Password for histroy database
+## The following are required when telemetry is enabled
+## If telemetry is enabled, a stats page will be available at http://your.server/results/stats.php
 # password: "ChangeMe"
+# email: "fake@fake.com"
 
-## The following are optional. The default is sqlite database and no other options are needed
-## Other database types are "mysql" or "postgresql". If set, the remaining options are required
-dbType: sqlite
-# dbName:
-# dbHostname:
-# dbUsername:
-# dvPassword:
+## The following are optional. The defaults are listed
+# title: LibreSpeed
+## Test IDs are obfuscated, to avoid exposing the database internal sequential IDs
+# idObfuscation: false
+## IP addresses and hostnames are redacted from the collected telemetry, for better privacy
+# redactIPAddresses: false
+## Specifies how the distance from the server is measured. Can be either km for kilometers, mi for miles, or an empty string to disable distance measurement.
+# distance: "km"
 
 
 service:
