@@ -1,6 +1,6 @@
 # Librespeed
 
-Low-code programming for event-driven applications
+HTML5 based speedtest with password protected history
 
 **This chart is not maintained by the Librespeed project and any issues with the chart should be raised [here](https://github.com/billimek/billimek-charts/issues/new)**
 
