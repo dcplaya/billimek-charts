@@ -8,7 +8,7 @@ HTML5 based speedtest with password protected history
 
 ```shell
 helm repo add billimek https://billimek.com/billimek-charts/
-helm install billimek/Librespeed
+helm install billimek/librespeed
 ```
 
 ## Introduction
@@ -20,7 +20,7 @@ This code is adopted from the [Linuxserver Librespeed docker image](https://hub.
 To install the chart with the release name `my-release`:
 
 ```shell
-helm install --name my-release billimek/Librespeed
+helm install --name my-release billimek/librespeed
 ```
 ## Uninstalling the Chart
 
@@ -84,7 +84,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 ```shell
 helm install --name my-release \
   --set config.timezone="America/New_York" \
-    billimek/Librespeed
+    billimek/librespeed
 ```
 
 Alternatively, a YAML file that specifies the values for the above parameters can be provided while installing the chart. For example,

@@ -4,13 +4,13 @@ description: Librespeed is a HTML5 webpage to test upload and download speeds
 name: librespeed
 version: 1.0.0
 keywords:
-  - Librespeed
+  - librespeed
 home: https://github.com/billimek/billimek-charts/tree/master/charts/librespeed
 icon: https://github.com/librespeed/speedtest/blob/master/.logo/logo3.png?raw=true
 sources:
   - https://github.com/librespeed/speedtest
   - https://hub.docker.com/r/linuxserver/librespeed
-  - https://github.com/billimek/billimek-charts/tree/master/charts/Librespeed
+  - https://github.com/billimek/billimek-charts/tree/master/charts/librespeed
 maintainers:
   - name: billimek
     email: jeff@billimek.com
